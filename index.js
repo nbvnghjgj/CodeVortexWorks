@@ -1,7 +1,15 @@
-function lowestCommonAncestor(root, p, q) {
-  if (!root || root === p || root === q) return root;
-  const left = lowestCommonAncestor(root.left, p, q);
-  const right = lowestCommonAncestor(root.right, p, q);
-  if (left && right) return root;
-  return left ? left : right;
+function findMaxLength(nums) {
+  const map = new Map();
+  map.set(0, -1);
+  let count = 0;
+  let maxLength = 0;
+  for (let i = 0; i < nums.length; i++) {
+    count += nums[i] === 1 ? 1 : -1;
+    if (map.has(count)) {
+      maxLength = Math.max(maxLength, i - map.get(count));
+    } else {
+      map.set(count, i);
+    }
+  }
+  return maxLength;
 }
