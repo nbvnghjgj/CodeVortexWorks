@@ -1,15 +1,17 @@
-function findMaxLength(nums) {
-  const map = new Map();
-  map.set(0, -1);
-  let count = 0;
-  let maxLength = 0;
-  for (let i = 0; i < nums.length; i++) {
-    count += nums[i] === 1 ? 1 : -1;
-    if (map.has(count)) {
-      maxLength = Math.max(maxLength, i - map.get(count));
-    } else {
-      map.set(count, i);
-    }
+function sortedListToBST(head) {
+  if (!head) return null;
+  if (!head.next) return new TreeNode(head.val);
+  let slow = head;
+  let fast = head;
+  let prev = null;
+  while (fast && fast.next) {
+    prev = slow;
+    slow = slow.next;
+    fast = fast.next.next;
   }
-  return maxLength;
+  const root = new TreeNode(slow.val);
+  prev.next = null;
+  root.left = sortedListToBST(head);
+  root.right = sortedListToBST(slow.next);
+  return root;
 }
