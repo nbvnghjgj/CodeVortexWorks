@@ -1,17 +1,16 @@
-function sortedListToBST(head) {
-  if (!head) return null;
-  if (!head.next) return new TreeNode(head.val);
-  let slow = head;
-  let fast = head;
-  let prev = null;
-  while (fast && fast.next) {
-    prev = slow;
-    slow = slow.next;
-    fast = fast.next.next;
+function minDepth(root) {
+  if (!root) return 0;
+  const queue = [root];
+  let depth = 1;
+  while (queue.length) {
+    const size = queue.length;
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      if (!node.left && !node.right) return depth;
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    depth++;
   }
-  const root = new TreeNode(slow.val);
-  prev.next = null;
-  root.left = sortedListToBST(head);
-  root.right = sortedListToBST(slow.next);
-  return root;
+  return depth;
 }
