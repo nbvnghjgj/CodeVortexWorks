@@ -1,6 +1,20 @@
-const flattenDepth = (arr, depth = 1) =>
-  arr.reduce(
-    (a, v) =>
-      a.concat(depth > 1 && Array.isArray(v) ? flattenDepth(v, depth - 1) : v),
-    [],
-  );
+function detectCycle(head) {
+  let slow = head;
+  let fast = head;
+  let hasCycle = false;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      hasCycle = true;
+      break;
+    }
+  }
+  if (!hasCycle) return null;
+  slow = head;
+  while (slow !== fast) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return slow;
+}
